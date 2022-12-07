@@ -18,5 +18,21 @@ import "fmt"
 
 type Part string
 
+func printAssemblyLine(assemblyLine []Part) {
+	fmt.Println("Assembly line is", assemblyLine, "it length is", len(assemblyLine))
+}
+
 func main() {
+	assemblyLine := make([]Part, 3)
+	assemblyLine[0] = "stick"
+	assemblyLine[1] = "boots"
+	assemblyLine[2] = "ring of health"
+
+	printAssemblyLine(assemblyLine)
+
+	assemblyLine = append(assemblyLine, "vanguard", "power threads")
+	printAssemblyLine(assemblyLine)
+
+	assemblyLine = assemblyLine[len(assemblyLine)-2:]
+	printAssemblyLine(assemblyLine)
 }

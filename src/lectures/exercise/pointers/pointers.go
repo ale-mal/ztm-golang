@@ -16,8 +16,69 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+)
+
+const (
+	Active   = true
+	Inactive = false
+)
+
+type SecurityTag bool
+
+type Item struct {
+	name string
+	tag  SecurityTag
+}
+
+func activate(tag *SecurityTag) {
+	*tag = Active
+}
+
+func deactivate(tag *SecurityTag) {
+	*tag = Inactive
+}
+
+func checkout(items []Item) {
+	fmt.Println("checking out...")
+	for i := 0; i < len(items); i++ {
+		deactivate(&items[i].tag)
+	}
+}
 
 func main() {
+	items := []Item{
+		{"iphone", Active},
+		{"ipad", Active},
+		{"macbook", Active},
+		{"apple watch", Active},
+	}
+	fmt.Println("Items are", items)
+	fmt.Println()
 
+	// deactivate random item
+	indexToDeactivate := rand.Intn(len(items))
+	fmt.Println("Deactivating", items[indexToDeactivate].name)
+	deactivate(&items[indexToDeactivate].tag)
+	fmt.Println("Items are", items)
+	fmt.Println()
+
+	// checkout first half [0, 2) of items
+	part1 := items[:2]
+	for _, item := range part1 {
+		fmt.Println("Deactivating", item.name)
+	}
+	checkout(part1)
+	fmt.Println("Items are", items)
+	fmt.Println()
+
+	// checkout second half [2, n) of items
+	part2 := items[2:]
+	for _, item := range part2 {
+		fmt.Println("Deactivating", item.name)
+	}
+	checkout(part2)
+	fmt.Println("Items are", items)
 }
